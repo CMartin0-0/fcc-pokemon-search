@@ -6,7 +6,66 @@
     <title>Pokemon Search</title>
   </head>
   <body>
-    
-    <script type="module" src="/src/main.js"></script>
+     <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+      <main class="main-container">
+        <div class="search-container">
+          <label for="search-input" class="search-label">Enter a Pokémon's name or # to search.</label>
+          <br></br>
+          <input id="search-input" class="search-input" placeholder="Name or #:">
+          <button id="search-button" class="search-button" type="submit">Search</button>
+        </div>
+        <div class="pkmn-container">
+          <div id="pokemon-name"></div>
+          <div id="pokemon-id"></div>
+            <div id= "sprite-container" class="sprite-container">
+          </div>
+          <div id="weight"></div>
+          <div id="height"></div>
+          <div id="types">
+          </div> 
+        </div>
+        <!-- Start stats table -->
+      <div class="table-container-1">
+        <table class="pkmn-stats-table">
+           <tr class="stat-heading-tr">
+            <th>Base Stats
+             </th>
+           </tr>
+         </table>
+      </div>
+        <div class="table-container-2">
+       <table class="pkmn-stats-table">
+         <tr class="stat-heading-tr">
+            <th>HP</th>                   
+            <th>Attack</th>                  
+            <th>Defense</th>                 
+         </tr>
+         <tr class="stats-tr">
+            <td id="hp"></td>
+            <td id="attack"></td>
+            <td id="defense"></td>
+          </tr>
+       </table>
+         
+        
+       <table class="pkmn-stats-table">
+            <tr class="stat-heading-tr">
+               <th>Special Attack</th>        
+               <th>Special Defense</th>
+               <th>Speed</th>
+            </tr>
+            <tr class="stats-tr">
+              <td id="special-attack"></td>
+              <td id="special-defense"></td>
+              <td id="speed"></td>
+            </tr>
+         </table>
+        </div>
+       <!-- end stats table -->
+      </main>
+    <script type="module" src="/src/main.js" async></script>
   </body>
 </html>
