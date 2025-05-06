@@ -71,9 +71,7 @@ const pkmnData = async () => {
 const clearDisplay = () => {
   //remove sprite
 
-  if (sprite) {
-    sprite.remove();
-  }
+  sprite.remove();
 
   //clear pokemon display / stats
 
