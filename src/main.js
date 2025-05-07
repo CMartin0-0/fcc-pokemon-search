@@ -95,5 +95,6 @@ searchBtn.addEventListener("click", pkmnData);
 pkmnSearchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     pkmnData();
+    pkmnSearchInput.value = "";
   }
 });
