@@ -35,7 +35,6 @@ const pkmnData = async () => {
       `https://pokeapi-proxy.freecodecamp.rocks/api/pokemon/${formattedInput}`,
     );
     const data = await res.json();
-    console.log(data);
 
     //set pokemon info
 
@@ -71,7 +70,9 @@ const pkmnData = async () => {
 const clearDisplay = () => {
   //remove sprite
 
-  sprite.remove();
+  if (sprite) {
+    sprite.remove();
+  }
 
   //clear pokemon display / stats
 
@@ -86,6 +87,7 @@ const clearDisplay = () => {
   pkmnSpAtk.textContent = "";
   pkmnSpDef.textContent = "";
   pkmnSpd.textContent = "";
+  pkmnSearchInput.value = "";
 };
 
 searchBtn.addEventListener("click", pkmnData);
