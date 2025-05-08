@@ -43,7 +43,7 @@ const fetchPkmnData = async (pkmn) => {
     );
     const data = await res.json();
     pkmnSearchInput.value = "";
-    addPkmnData(data);
+    renderPkmnData(data);
   } catch (error) {
     clearDisplay();
     alert("Pokémon not found");
@@ -51,7 +51,7 @@ const fetchPkmnData = async (pkmn) => {
   }
 };
 
-const addPkmnData = (pkmn) => {
+const renderPkmnData = (pkmn) => {
   pokemonData = pkmn;
 
   //set pokemon info
