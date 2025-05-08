@@ -16,8 +16,8 @@ const pkmnSpd = document.getElementById("speed");
 
 const getPkmnFromInput = () => {
   //format input
-  const reg1 = /[^a-zA-Z0-9_]\s/gim;
-  const reg2 = /\s/g;
+  const reg1 = /[^a-zA-Z0-9_\s]/gim;
+  const reg2 = /[_\s]/g;
   const reg3 = /[♂]/;
   const reg4 = /[♀]/;
 
@@ -41,6 +41,7 @@ const pkmnData = async (pkmn) => {
     const data = await res.json();
 
     pkmnSearchInput.value = "";
+    console.log(data);
     //set pokemon info
 
     pkmnName.textContent = `${data.name.toUpperCase()}`;
