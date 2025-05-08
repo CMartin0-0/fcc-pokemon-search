@@ -2,7 +2,6 @@ import "./style.css";
 const pkmnSearchInput = document.getElementById("search-input");
 const searchBtn = document.getElementById("search-button");
 const imgSpriteContainer = document.getElementById("sprite-container");
-const sprite = document.getElementById("sprite");
 const pkmnTypeContainer = document.getElementById("types");
 const pkmnWeight = document.getElementById("weight");
 const pkmnHeight = document.getElementById("height");
@@ -15,27 +14,33 @@ const pkmnSpAtk = document.getElementById("special-attack");
 const pkmnSpDef = document.getElementById("special-defense");
 const pkmnSpd = document.getElementById("speed");
 
-const pkmnData = async () => {
+const getPkmnFromInput = () => {
+  //format input
+  const reg1 = /[^a-zA-Z0-9_]\s/gim;
+  const reg2 = /\s/g;
+  const reg3 = /[♂]/;
+  const reg4 = /[♀]/;
+
+  const formattedInput = pkmnSearchInput.value
+    .toLowerCase()
+    .trim()
+    .replace(reg1, "")
+    .replace(reg2, "-")
+    .replace(reg3, "-m")
+    .replace(reg4, "-f");
+
+  return formattedInput;
+};
+const pkmnData = async (pkmn) => {
   try {
-    //format input
-    const reg1 = /[^a-zA-Z0-9_]\s/gim;
-    const reg2 = /\s/g;
-    const reg3 = /[♂]/;
-    const reg4 = /[♀]/;
-    const formattedInput = pkmnSearchInput.value
-      .toLowerCase()
-      .trim()
-      .replace(reg1, "")
-      .replace(reg2, "-")
-      .replace(reg3, "-m")
-      .replace(reg4, "-f");
     //fetch pokemon data
 
     const res = await fetch(
-      `https://pokeapi-proxy.freecodecamp.rocks/api/pokemon/${formattedInput}`,
+      `https://pokeapi-proxy.freecodecamp.rocks/api/pokemon/${pkmn}`,
     );
     const data = await res.json();
 
+    pkmnSearchInput.value = "";
     //set pokemon info
 
     pkmnName.textContent = `${data.name.toUpperCase()}`;
@@ -70,9 +75,7 @@ const pkmnData = async () => {
 const clearDisplay = () => {
   //remove sprite
 
-  if (sprite) {
-    sprite.remove();
-  }
+  imgSpriteContainer.innerHTML = "";
 
   //clear pokemon display / stats
 
@@ -90,11 +93,12 @@ const clearDisplay = () => {
   pkmnSearchInput.value = "";
 };
 
-searchBtn.addEventListener("click", pkmnData);
+searchBtn.addEventListener("click", () => {
+  pkmnData(getPkmnFromInput());
+});
 
 pkmnSearchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
-    pkmnData();
-    pkmnSearchInput.value = "";
+    pkmnData(getPkmnFromInput());
   }
 });
