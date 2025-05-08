@@ -76,6 +76,11 @@ input::placeholder {
   color: white;
 }
 
+input:active,
+input:focus {
+  outline: 2px solid #0e2027;
+}
+
 #search-button {
   grid-column: 1;
   grid-row: 2;
