@@ -13,6 +13,8 @@ const pkmnDef = document.getElementById("defense");
 const pkmnSpAtk = document.getElementById("special-attack");
 const pkmnSpDef = document.getElementById("special-defense");
 const pkmnSpd = document.getElementById("speed");
+const otherSpriteContainer = document.getElementById("all-sprite-container");
+let pokemonData;
 
 const getPkmnFromInput = () => {
   //format input
@@ -31,46 +33,62 @@ const getPkmnFromInput = () => {
 
   return formattedInput;
 };
-const pkmnData = async (pkmn) => {
+
+const fetchPkmnData = async (pkmn) => {
   try {
-    //fetch pokemon data
+    //fetch pokemon pokemonData
 
     const res = await fetch(
       `https://pokeapi-proxy.freecodecamp.rocks/api/pokemon/${pkmn}`,
     );
     const data = await res.json();
-
     pkmnSearchInput.value = "";
-    console.log(data);
-    //set pokemon info
-
-    pkmnName.textContent = `${data.name.toUpperCase()}`;
-    pkmnId.textContent = `#${data.id}`;
-    pkmnHeight.textContent = `Height: ${data.height}`;
-    pkmnWeight.textContent = `Weight: ${data.weight}`;
-    imgSpriteContainer.innerHTML = `<img id="sprite" src="${data.sprites.front_default}" alt="${data.name}"/>`;
-    pkmnTypeContainer.innerHTML = data.types
-      .map(
-        (obj) =>
-          `<span class="type ${
-            obj.type.name
-          }">${obj.type.name.toUpperCase()}</span>`,
-      )
-      .join("");
-
-    //set pokemon stats
-
-    pkmnHp.textContent = `${data.stats[0].base_stat}`;
-    pkmnAtk.textContent = `${data.stats[1].base_stat}`;
-    pkmnDef.textContent = `${data.stats[2].base_stat}`;
-    pkmnSpAtk.textContent = `${data.stats[3].base_stat}`;
-    pkmnSpDef.textContent = `${data.stats[4].base_stat}`;
-    pkmnSpd.textContent = `${data.stats[5].base_stat}`;
+    addPkmnData(data);
   } catch (error) {
     clearDisplay();
     alert("Pokémon not found");
     console.error(error);
   }
+};
+
+const addPkmnData = (pkmn) => {
+  pokemonData = pkmn;
+
+  //set pokemon info
+
+  pkmnName.textContent = `${pokemonData.name.toUpperCase()}`;
+  pkmnId.textContent = `#${pokemonData.id}`;
+  pkmnHeight.textContent = `Height: ${pokemonData.height}`;
+  pkmnWeight.textContent = `Weight: ${pokemonData.weight}`;
+  imgSpriteContainer.innerHTML = `<img id="sprite" src="${pokemonData.sprites.front_default}" alt="${pokemonData.name}"/>`;
+  otherSpriteContainer.innerHTML = `
+            <button class="sprite-btn"><img id="front-sprite" src="${pokemonData.sprites.front_default}" alt="${pokemonData.name}"/></button>
+            <button class="sprite-btn"><img id="back-sprite" src="${pokemonData.sprites.back_default}" alt="${pokemonData.name}"/></button>
+            <button class="sprite-btn"><img id="front-shiny-sprite" src="${pokemonData.sprites.front_shiny}" alt="${pokemonData.name}"/></button>
+            <button class='sprite-btn'><img id="back-shiny-sprite" src="${pokemonData.sprites.back_shiny}" alt="${pokemonData.name}"/></button>`;
+  pkmnTypeContainer.innerHTML = pokemonData.types
+    .map(
+      (obj) =>
+        `<span class="type ${
+          obj.type.name
+        }">${obj.type.name.toUpperCase()}</span>`,
+    )
+    .join("");
+
+  //set pokemon stats
+
+  pkmnHp.textContent = `${pokemonData.stats[0].base_stat}`;
+  pkmnAtk.textContent = `${pokemonData.stats[1].base_stat}`;
+  pkmnDef.textContent = `${pokemonData.stats[2].base_stat}`;
+  pkmnSpAtk.textContent = `${pokemonData.stats[3].base_stat}`;
+  pkmnSpDef.textContent = `${pokemonData.stats[4].base_stat}`;
+  pkmnSpd.textContent = `${pokemonData.stats[5].base_stat}`;
+
+  otherSpriteContainer.addEventListener("click", (e) => {
+    const target = e.target.closest("img");
+    if (!target) return;
+    imgSpriteContainer.innerHTML = `<img id="sprite" src="${target.src}" alt="${target.name}"/>`;
+  });
 };
 
 const clearDisplay = () => {
@@ -95,11 +113,11 @@ const clearDisplay = () => {
 };
 
 searchBtn.addEventListener("click", () => {
-  pkmnData(getPkmnFromInput());
+  fetchPkmnData(getPkmnFromInput());
 });
 
 pkmnSearchInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
-    pkmnData(getPkmnFromInput());
+    fetchPkmnData(getPkmnFromInput());
   }
 });
