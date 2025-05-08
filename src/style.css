@@ -9,7 +9,7 @@
 body {
   height: 100vh;
   min-width: 450px;
-  background-image: url("./assets/Kyogre.jpg");
+  background-image: url("./assets/kyogre.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
